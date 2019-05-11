@@ -1,21 +1,9 @@
 import React from 'react';
+import Link from 'next/link';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-  }
-
-  fetchNextPage(page) {
-    fetch(`https://api.godsunchained.com/v0/user/0x682d283Ab86e2655e30273B14C637a253B81BeD3/inventory?page=${page}`)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          return this.props.onPageChange(result)
-        },
-        (error) => {
-          console.log(error)
-        }
-      )
   }
 
   render() {
@@ -24,8 +12,12 @@ class App extends React.Component {
         <strong>
           page: {this.props.page}
         </strong>
-        <button onClick={() => this.fetchNextPage(this.props.page - 1)}>PREV</button>
-        <button onClick={() => this.fetchNextPage(this.props.page + 1)}>NEXT</button>
+        <Link href={{ pathname: '/', query: {page: this.props.page - 1} }}>
+          <button>PREV</button>
+        </Link>
+        <Link href={{ pathname: '/', query: {page: this.props.page + 1} }}>
+          <button>NEXT</button>
+        </Link>
       </div>
     );
   }

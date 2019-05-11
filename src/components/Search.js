@@ -1,29 +1,28 @@
 import React from 'react';
+import Router from 'next/router';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: null,
-      isLoaded: false,
-      items: []
+      error: false,
     };
     this.getInventoryOfUser = this.getInventoryOfUser.bind(this);
   }
 
-  getInventoryOfUser() {
-    const user = document.getElementById('user-input').value;
-    let url = new URL(`https://api.godsunchained.com/v0/user/${user}/inventory`);
-    fetch(url)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          return this.props.onSearch(user, result)
-        },
-        (error) => {
-          console.log(error)
-        }
-      )
+  getInventoryOfUser(e) {
+    e.preventDefault();
+    let input = document.getElementById('user-input').value;
+    if (input != '') {
+      this.setState({loading: true});
+      Router.push({
+        pathname: '/',
+        query: { user: input }
+      });
+    }
+    else {
+      this.setState({error: true})
+    }
   }
 
   render() {

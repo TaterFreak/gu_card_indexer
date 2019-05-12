@@ -1,11 +1,9 @@
 import React from 'react';
-import Layout from '../src/components/Layout';
-import Card from '../src/components/Card';
-import Pagination from '../src/components/Pagination';
-import Filters from '../src/components/Filters';
-import Search from '../src/components/Search';
-
 import fetch from 'isomorphic-unfetch';
+import Layout from '../src/components/layout/Layout';
+import Card from '../src/components/card/Card';
+import Pagination from '../src/components/pagination/Pagination';
+import Filters from '../src/components/filters/Filters';
 
 class App extends React.Component {
   static async getInitialProps(context) {
@@ -30,7 +28,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       error: null,
-      isLoaded: true,
+      load: false,
       items: []
     };
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -46,11 +44,9 @@ class App extends React.Component {
   }
 
   render() {
-    const { error, isLoaded } = this.state;
+    const { error, loading } = this.state;
     const { address } = this.props;
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
+    if (loading) {
       return <div>Loading...</div>;
     } else {
       return (

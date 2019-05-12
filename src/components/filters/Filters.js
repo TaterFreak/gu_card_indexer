@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import {RARITIES, QUALITIES, TYPES, TRIBES} from '../../config/constants';
+import {RARITIES, QUALITIES, TYPES, TRIBES} from '../../../config/constants';
 import styles from './filters.scss'
 
 class App extends React.Component {

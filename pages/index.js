@@ -1,13 +1,13 @@
 import React from 'react';
-import Head from 'next/head'
-import Search from '../src/components/Search';
+import Search from '../src/components/search/Search';
+import Meta from '../src/components/meta/Meta';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       error: null,
-      isLoaded: true,
+      loading: false,
       items: []
     };
     this.handleSearch = this.handleSearch.bind(this);
@@ -18,20 +18,16 @@ class App extends React.Component {
   }
 
   render() {
-    const { error, isLoaded } = this.state;
+    const { error, loading } = this.state;
     const { address } = this.props;
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
+    if (loading) {
       return <div>Loading...</div>;
     } else {
       return (
         <div>
-          <Head>
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <meta charSet="utf-8" />
-          </Head>
-          <Search onSearch={this.handleSearch}/>
+          <Meta>
+            <Search onSearch={this.handleSearch}/>
+          </Meta>
         </div>
       );
     }

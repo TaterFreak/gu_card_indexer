@@ -15,7 +15,6 @@ class App extends React.Component {
     e.preventDefault();
     let input = document.getElementById('user-input').value;
     if (input != '') {
-      this.setState({loading: true});
       Router.push({
         pathname: '/user',
         query: { user: input }

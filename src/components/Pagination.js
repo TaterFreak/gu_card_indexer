@@ -12,10 +12,10 @@ class App extends React.Component {
         <strong>
           page: {this.props.page}
         </strong>
-        <Link href={{ pathname: '/', query: {page: this.props.page - 1} }}>
+        <Link href={{ pathname: '/user', query: {page: this.props.page - 1} }}>
           <button>PREV</button>
         </Link>
-        <Link href={{ pathname: '/', query: {page: this.props.page + 1} }}>
+        <Link href={{ pathname: '/user', query: {page: this.props.page + 1} }}>
           <button>NEXT</button>
         </Link>
       </div>

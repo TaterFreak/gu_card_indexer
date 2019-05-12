@@ -1,5 +1,6 @@
 import React from 'react';
 import Router from 'next/router';
+import styles from './search.scss'
 
 class App extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class App extends React.Component {
     if (input != '') {
       this.setState({loading: true});
       Router.push({
-        pathname: '/',
+        pathname: '/user',
         query: { user: input }
       });
     }
@@ -27,9 +28,14 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <input type="text" id="user-input" name="eth-address"/>
+      <div className="search-wrapper">
+        <div className="inputTxt">
+          <input type="text" id="user-input" name="eth-address"/>
+          <span className="bar"></span>
+          <span className="label">Eth address</span>
+        </div>
         <button onClick={this.getInventoryOfUser}>Search</button>
+        <style jsx>{styles}</style>
       </div>
     );
   }

@@ -9,6 +9,7 @@ class App extends React.Component {
       error: false,
     };
     this.getInventoryOfUser = this.getInventoryOfUser.bind(this);
+    this.hasContent = this.hasContent.bind(this);
   }
 
   getInventoryOfUser(e) {
@@ -25,15 +26,29 @@ class App extends React.Component {
     }
   }
 
+  hasContent() {
+    let input = document.getElementById('user-input');
+    if (input.value.length > 0) {
+      this.setState({
+        hasContent: true
+      })
+    } else {
+      this.setState({
+        hasContent: false
+      })
+    }
+
+  }
+
   render() {
     return (
       <div className="search-wrapper">
         <div className="inputTxt">
-          <input type="text" id="user-input" name="eth-address"/>
+          <input type="text" id="user-input" className={this.state.hasContent ? 'has-content' : ''} name="eth-address" onChange={this.hasContent}/>
           <span className="bar"></span>
           <span className="label">Eth address</span>
         </div>
-        <button onClick={this.getInventoryOfUser}>Search</button>
+        <button className="search-button" onClick={this.getInventoryOfUser}>Search</button>
         <style jsx>{styles}</style>
       </div>
     );

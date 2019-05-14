@@ -1,6 +1,6 @@
 import React from 'react';
 import fetch from 'isomorphic-unfetch';
-import Layout from '../src/components/layout/Layout';
+import Grid from '../src/layouts/grid/Grid';
 import Card from '../src/components/card/Card';
 import Pagination from '../src/components/pagination/Pagination';
 import Filters from '../src/components/filters/Filters';
@@ -13,7 +13,6 @@ class App extends React.Component {
 
     if (query !== undefined) {
       Object.keys(query).forEach(key => {
-        //url.searchParams.append(key, params[key]))
         url = `https://api.godsunchained.com/v0/user/${user}/inventory?${key}=${query[key]}`
       })
       console.log(url)
@@ -21,7 +20,7 @@ class App extends React.Component {
 
     const res = await fetch(url)
     const address = await res.json()
-    return {address}
+    return {address, query}
   }
 
   constructor(props) {
@@ -45,21 +44,21 @@ class App extends React.Component {
 
   render() {
     const { error, loading } = this.state;
-    const { address } = this.props;
+    const { address, query } = this.props;
     if (loading) {
       return <div>Loading...</div>;
     } else {
       return (
         <div>
-          <Filters onUpdateFilter={this.handleFilters}/>
+          <Filters onUpdateFilter={this.handleFilters} query={query}/>
           <Pagination onPageChange={this.handlePageChange} page={address.page}/>
           <div>
             {address.records != null &&
-              <Layout>
+              <Grid>
                 {address.records.map((card, index) =>
                   <Card card={card} key={index}/>
                 )}
-              </Layout>
+              </Grid>
             }
           </div>
         </div>

@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import styles from './meta.scss'
 
 export default function Meta({children}) {
   return (
@@ -7,9 +6,7 @@ export default function Meta({children}) {
 	    <Head>
 		    <meta name="viewport" content="width=device-width, initial-scale=1" />
 		    <meta charSet="utf-8" />
-		    <style jsx>{styles}</style>
 	  	</Head>
-	  	{children}
   	</div>
   )
 }

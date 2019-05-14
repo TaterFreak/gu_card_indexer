@@ -25,9 +25,8 @@ class App extends React.Component {
     } else {
       return (
         <div>
-          <Meta>
-            <Search onSearch={this.handleSearch}/>
-          </Meta>
+          <Meta />
+          <Search onSearch={this.handleSearch}/>
         </div>
       );
     }

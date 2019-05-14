@@ -14,7 +14,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <style>{`body { margin: 0 } /* custom! */`}</style>
+          <style>{`body { margin: 0; background-color: #3d3961 } /* custom! */`}</style>
         </Head>
         <body className="custom_class">
           <Main />

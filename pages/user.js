@@ -5,30 +5,42 @@ import Card from '../src/components/card/Card';
 import Pagination from '../src/components/pagination/Pagination';
 import Filters from '../src/components/filters/Filters';
 
-class App extends React.Component {
+class User extends React.Component {
   static async getInitialProps(context) {
-    const user = '0x682d283Ab86e2655e30273B14C637a253B81BeD3';
-    const query = context.query;
-    let url = `https://api.godsunchained.com/v0/user/${user}/inventory`;
+    const searchQuery = context.query;
+    const addr = context.query.addr;
 
-    if (query !== undefined) {
-      Object.keys(query).forEach(key => {
-        url = `https://api.godsunchained.com/v0/user/${user}/inventory?${key}=${query[key]}`
-      })
-      console.log(url)
+    let page = 1;
+    if (context.query.page != undefined) {
+      page = context.query.page
     }
 
-    const res = await fetch(url)
-    const address = await res.json()
-    return {address, query}
+    Object.keys(searchQuery).forEach(key => {
+      if (key === 'addr') {
+        delete searchQuery[key]
+      }
+
+      if (key === 'page') {
+        delete searchQuery[key]
+      }
+    });
+
+    let url = `https://api.godsunchained.com/v0/user/${addr}/inventory`;
+    if (searchQuery !== undefined) {
+      Object.keys(searchQuery).forEach(key => {
+        url = `https://api.godsunchained.com/v0/user/${addr}/inventory?page=${page}&${key}=${searchQuery[key]}`
+      })
+    }
+
+    const res = await fetch(url);
+    const inventory = await res.json();
+    return {inventory, searchQuery, addr}
   }
 
   constructor(props) {
     super(props);
     this.state = {
       error: null,
-      load: false,
-      items: []
     };
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleFilters = this.handleFilters.bind(this);
@@ -43,28 +55,25 @@ class App extends React.Component {
   }
 
   render() {
-    const { error, loading } = this.state;
-    const { address, query } = this.props;
-    if (loading) {
-      return <div>Loading...</div>;
-    } else {
-      return (
+    const { error, } = this.state;
+    const { inventory, searchQuery, addr } = this.props;
+    console.log(searchQuery)
+    return (
+      <div>
+        <Filters onUpdateFilter={this.handleFilters} addr={addr}/>
+        <Pagination onPageChange={this.handlePageChange} page={inventory.page} addr={addr} searchQuery={searchQuery}/>
         <div>
-          <Filters onUpdateFilter={this.handleFilters} query={query}/>
-          <Pagination onPageChange={this.handlePageChange} page={address.page}/>
-          <div>
-            {address.records != null &&
-              <Grid>
-                {address.records.map((card, index) =>
-                  <Card card={card} key={index}/>
-                )}
-              </Grid>
-            }
-          </div>
+          {inventory.records != null &&
+            <Grid>
+              {inventory.records.map((card, index) =>
+                <Card card={card} key={index}/>
+              )}
+            </Grid>
+          }
         </div>
-      );
-    }
+      </div>
+    );
   }
 }
 
-export default App;
+export default User;

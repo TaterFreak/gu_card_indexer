@@ -1,8 +1,9 @@
 import React from 'react';
 import Router from 'next/router';
+import PropTypes from 'prop-types';
 import styles from './search.scss'
 
-class App extends React.Component {
+class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +19,7 @@ class App extends React.Component {
     if (input != '') {
       Router.push({
         pathname: '/user',
-        query: { user: input }
+        query: { addr: input }
       });
     }
     else {
@@ -55,4 +56,8 @@ class App extends React.Component {
   }
 }
 
-export default App;
+Search.propTypes = {
+  onSearch: PropTypes.func.isRequired,
+}
+
+export default Search;

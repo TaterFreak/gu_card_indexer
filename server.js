@@ -10,6 +10,11 @@ app
   .then(() => {
     const server = express()
 
+    server.get('/user/:addr', (req, res) => {
+      console.log('gznlesklfgjslegjfkl')
+      return app.render(req, res, '/user', { addr: req.params.addr })
+    })
+
     server.get('*', (req, res) => {
       return handle(req, res)
     })

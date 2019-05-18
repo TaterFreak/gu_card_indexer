@@ -1,0 +1,25 @@
+button {
+  font-family: Helvetica, sans-serif;
+  font-size: 16px;
+  padding: 5px 12px;
+  color: #ff9b00;
+  letter-spacing: 1px;
+  line-height: 22px;
+  border: 2px solid #c1b299;
+  border-radius: 40px;
+  background: transparent;
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+
+  &.toggled {
+  	background-color: #f9f9f9;
+    color: #3d3961;
+    border-color: #3d3961
+  }
+
+  &:active {
+    background-color: #f9f9f9;
+    color: #3d3961;
+    border-color: #3d3961
+  }
+}

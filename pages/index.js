@@ -10,11 +10,6 @@ class Index extends React.Component {
       loading: false,
       items: []
     };
-    this.handleSearch = this.handleSearch.bind(this);
-  }
-
-  handleSearch(user, inventory) {
-    console.log('search user')
   }
 
   render() {

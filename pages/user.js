@@ -42,26 +42,15 @@ class User extends React.Component {
     this.state = {
       error: null,
     };
-    this.handlePageChange = this.handlePageChange.bind(this);
-    this.handleFilters = this.handleFilters.bind(this);
-  }
-
-  handlePageChange(inventory) {
-    console.log('page change')
-  }
-
-  handleFilters(params) {
-    console.log(`filter`)
   }
 
   render() {
     const { error, } = this.state;
     const { inventory, searchQuery, addr } = this.props;
-    console.log(searchQuery)
     return (
       <div>
         <Filters onUpdateFilter={this.handleFilters} addr={addr}/>
-        <Pagination onPageChange={this.handlePageChange} page={inventory.page} addr={addr} searchQuery={searchQuery}/>
+        <Pagination onPageChange={this.handlePageChange} page={inventory.page} addr={addr} searchQuery={searchQuery} records={inventory.records}/>
         <div>
           {inventory.records != null &&
             <Grid>

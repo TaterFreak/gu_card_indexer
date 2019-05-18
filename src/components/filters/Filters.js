@@ -2,6 +2,8 @@ import React from 'react';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
 
+import SimpleButton from '../buttons/SimpleButton';
+
 import {RARITIES, QUALITIES, TYPES, TRIBES} from '../../../config/constants';
 import styles from './filters.scss'
 
@@ -67,23 +69,27 @@ class Filters extends React.Component {
     const {addr} = this.props
     return (
       <div>
-          <button onClick={() => this.filter({'': ''}, addr)}>clear</button>
-        <hr />
-        {RARITIES.map((rarity, index) =>
-            <button onClick={() => this.filter({rarity: rarity}, addr)} key={index} className={Object.values(this.state.toggled).indexOf(rarity) != -1 ? 'toggled' : ''}>{rarity}</button>
-        )}
-        <hr />
+        <SimpleButton event={() => this.filter({"": ""}, addr)} content="ALL" />
+        <div className="filter__cell">
+          {RARITIES.map((rarity, index) =>
+            <SimpleButton event={() => this.filter({rarity: rarity}, addr)} toggle={Object.values(this.state.toggled).indexOf(rarity) != -1 ? 'toggled' : ''} content={rarity} />
+          )}
+        </div>
+        <div className="filter__cell">
         {QUALITIES.map((quality, index) =>
-            <button onClick={() => this.filter({quality: quality}, addr)} key={index} className={Object.values(this.state.toggled).indexOf(quality) != -1 ? 'toggled' : ''}>{quality}</button>
+          <SimpleButton event={() => this.filter({quality: quality}, addr)} toggle={Object.values(this.state.toggled).indexOf(quality) != -1 ? 'toggled' : ''} content={quality} />
         )}
-        <hr />
+        </div>
+        <div className="filter__cell">
         {TYPES.map((type, index) =>
-            <button onClick={() => this.filter({type: type}, addr)} key={index} className={Object.values(this.state.toggled).indexOf(type) != -1 ? 'toggled' : ''}>{type}</button>
+          <SimpleButton event={() => this.filter({type: type}, addr)} toggle={Object.values(this.state.toggled).indexOf(type) != -1 ? 'toggled' : ''} content={type} />
         )}
-        <hr />
+        </div>
+        <div className="filter__cell">
         {TRIBES.map((tribe, index) =>
-            <button onClick={() => this.filter({tribe: tribe}, addr)} key={index} className={Object.values(this.state.toggled).indexOf(tribe) != -1 ? 'toggled' : ''}>{tribe}</button>
+          <SimpleButton event={() => this.filter({tribe: tribe}, addr)} toggle={Object.values(this.state.toggled).indexOf(tribe) != -1 ? 'toggled' : ''} content={tribe} />
         )}
+        </div>
         <style jsx>{styles}</style>
       </div>
     );

@@ -2,6 +2,8 @@ import React from 'react';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
 
+import SimpleButton from '../buttons/SimpleButton';
+
 class Pagination extends React.Component {
   constructor(props) {
     super(props);
@@ -20,16 +22,35 @@ class Pagination extends React.Component {
   }
 
   render() {
-    const { page, addr, searchQuery} = this.props;
-    return (
-      <div>
-        <strong>
-          page: {this.props.page}
-        </strong>
-        <button onClick={() => this.filter({page: page - 1}, addr, searchQuery)} >PREV</button>
-        <button onClick={() => this.filter({page: page + 1}, addr, searchQuery)}>NEXT</button>
-      </div>
-    );
+    const { page, addr, searchQuery, records} = this.props;
+    if (page === 1) {
+      return (
+        <div>
+          <strong>
+            page: {this.props.page}
+          </strong>
+          <SimpleButton event={() => this.filter({page: page + 1}, addr, searchQuery)} content="NEXT" />
+        </div>
+      );
+    } else if (!records) {
+      return (
+        <div>
+          <SimpleButton event={() => this.filter({page: page - 1}, addr, searchQuery)} content="PREV" />
+
+          NO MORE :(
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <strong>
+            page: {this.props.page}
+          </strong>
+          <SimpleButton event={() => this.filter({page: page - 1}, addr, searchQuery)} content="PREV" />
+          <SimpleButton event={() => this.filter({page: page + 1}, addr, searchQuery)} content="NEXT" />
+        </div>
+      );
+    }
   }
 }
 

@@ -1,6 +1,31 @@
 import React from 'react';
 import Search from '../src/components/search/Search';
 import Meta from '../src/components/meta/Meta';
+import Web3 from 'web3';
+import Router from 'next/router';
+
+const web3 = new Web3(Web3.givenProvider || 'ws://localhost:8546', null, {});
+
+async function init() {
+  // Modern dapp browsers...
+    if (window.ethereum) {
+        window.web3 = new Web3(ethereum);
+        try {
+            // Request account access if needed
+            await ethereum.enable();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    // Legacy dapp browsers...
+    else if (window.web3) {
+        window.web3 = new Web3(web3.currentProvider);
+    }
+    // Non-dapp browsers...
+    else {
+        console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+    }
+}
 
 class Index extends React.Component {
   constructor(props) {
@@ -8,8 +33,19 @@ class Index extends React.Component {
     this.state = {
       error: null,
       loading: false,
-      items: []
     };
+  }
+
+  componentDidMount() {
+    init();
+  }
+
+  connect() {
+    let addr = ethereum.selectedAddress;
+    Router.push({
+      pathname: '/user',
+      query: { addr: addr }
+    });
   }
 
   render() {
@@ -20,8 +56,9 @@ class Index extends React.Component {
     } else {
       return (
         <div>
+          <button onClick={this.connect}>USE METAMASK</button>
           <Meta />
-          <Search onSearch={this.handleSearch}/>
+          <Search />
         </div>
       );
     }

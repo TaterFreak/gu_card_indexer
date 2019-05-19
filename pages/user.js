@@ -34,6 +34,7 @@ class User extends React.Component {
 
     const res = await fetch(url);
     const inventory = await res.json();
+
     return {inventory, searchQuery, addr}
   }
 
@@ -45,8 +46,9 @@ class User extends React.Component {
   }
 
   render() {
-    const { error, } = this.state;
+    const { error } = this.state;
     const { inventory, searchQuery, addr } = this.props;
+
     return (
       <div>
         <Filters onUpdateFilter={this.handleFilters} addr={addr}/>

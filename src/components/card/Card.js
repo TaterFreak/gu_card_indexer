@@ -20,10 +20,34 @@ class Card extends React.Component {
     }
   }
 
-  buildCardUrl(card) {
+  filterPurity() {
+    const cards = this.props.purities;
+    let shadow = 0;
+    let gold = 0;
+    let diamond = 0;
+    let plain = 0;
+    let total = {};
+
+    for (let card in cards) {
+      if (this.purityMapper(cards[card]) === 'shadow') {
+        shadow++
+      } else if (this.purityMapper(cards[card]) === 'gold') {
+        gold++
+      } else if (this.purityMapper(cards[card]) === 'diamond') {
+        diamond++
+      } else {
+        plain++
+      }
+    }
+
+    Object.assign(total, {plain: plain, shadow: shadow, gold: gold, diamond: diamond})
+    return total
+  }
+
+  buildCardUrl() {
     const baseUrl = 'https://images.godsunchained.com/cards/250/';
-    const cardId = card.id.Int64
-    const purity = this.purityMapper(card.purity)
+    const cardId = this.props.proto
+    const purity = this.purityMapper(this.props.purities.slice(-1)[0])
     const format = '.webp'
 
     let baseCardUrl = baseUrl + cardId + format;
@@ -36,18 +60,25 @@ class Card extends React.Component {
   }
 
   render() {
+    const purities = this.filterPurity()
     return (
       <figure>
         <div className="card">
-            <img src={this.buildCardUrl(this.props.card)} alt=""/>
+            <img src={this.buildCardUrl()} alt=""/>
         </div>
+        {Object.keys(purities).map((nb, index) =>
+          <span key={index}>
+            {nb}: {purities[nb]}|
+          </span>
+        )}
       </figure>
     );
   }
 }
 
 Card.propTypes = {
-  card: PropTypes.object.isRequired,
+  proto: PropTypes.string.isRequired,
+  purities: PropTypes.array.isRequired,
 }
 
 export default Card;

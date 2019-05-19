@@ -55,7 +55,6 @@ class Pagination extends React.Component {
 }
 
 Pagination.propTypes = {
-  onPageChange: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   addr: PropTypes.string.isRequired,
   searchQuery: PropTypes.object.isRequired

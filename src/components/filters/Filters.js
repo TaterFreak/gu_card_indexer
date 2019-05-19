@@ -97,7 +97,6 @@ class Filters extends React.Component {
 }
 
 Filters.propTypes = {
-  onUpdateFilter: PropTypes.func.isRequired,
   addr: PropTypes.string.isRequired
 }
 
